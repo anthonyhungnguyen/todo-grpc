@@ -52,17 +52,19 @@ func (s *TodoService) Create(ctx context.Context, req *v1.CreateRequest) (*v1.Cr
 		return nil, err
 	}
 
-	created_at, err := ptypes.Timestamp(req.ToDo.InsertAt)
+	defer c.Close()
+
+	created_at, err := ptypes.Timestamp(req.Todo.CreatedAt)
 	if err != nil {
 		return nil, status.Error(codes.InvalidArgument, "insert_at has invalid format > "+err.Error())
 	}
 
-	updated_at, err := ptypes.Timestamp(req.ToDo.UpdateAt)
+	updated_at, err := ptypes.Timestamp(req.Todo.UpdatedAt)
 	if err != nil {
 		return nil, status.Error(codes.InvalidArgument, "update_at has invalid format > "+err.Error())
 	}
 
-	res, err := c.ExecContext(ctx, "INSERT INTO todo(`title`, `description`, `created_at`, `updated_at`) VALUES(?, ?, ?, ?)", req.ToDo.Title, req.ToDo.Description, created_at, updated_at)
+	res, err := c.ExecContext(ctx, "INSERT INTO todo(`title`, `description`, `created_at`, `updated_at`) VALUES(?, ?, ?, ?)", req.Todo.Title, req.Todo.Description, created_at, updated_at)
 
 	if err != nil {
 		return nil, status.Error(codes.Unknown, "unable to insert to database > "+err.Error())
@@ -75,9 +77,9 @@ func (s *TodoService) Create(ctx context.Context, req *v1.CreateRequest) (*v1.Cr
 	}
 
 	return &v1.CreateResponse{
-		api: apiVersion,
-		id:  id,
-	}
+		Api: apiVersion,
+		Id:  id,
+	}, nil
 
 }
 
