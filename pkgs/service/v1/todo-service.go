@@ -4,7 +4,7 @@ import (
 	"context"
 	"database/sql"
 
-	v1 "github.com/anthonyhungnguyen276/todo-grpc/pkg/api/v1"
+	v1 "github.com/anthonyhungnguyen/todo-grpc/pkgs/api/v1"
 	"github.com/golang/protobuf/ptypes"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
