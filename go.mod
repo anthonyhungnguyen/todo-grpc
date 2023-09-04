@@ -1,4 +1,4 @@
-module github.com/anthonyhungnguyen/grpc-todo-app
+module github.com/anthonyhungnguyen/todo-grpc
 
 go 1.20
 
