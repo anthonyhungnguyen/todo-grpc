@@ -19,3 +19,5 @@
 
 # Go workspace file
 go.work
+cmd/server/server
+cmd/test-client/test-client
